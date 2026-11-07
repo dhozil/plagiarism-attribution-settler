@@ -32,11 +32,11 @@ Content-reuse disputes where an accused party posts a license fee so that a neut
 - 7/7 direct-mode unit tests (create validation + hash binding, plagiarized → creator full, not plagiarized → accused full, unreachable content → score 0, expiry after window, expiry/double-settle guards, auth/address/duplicate guards)
 - `genvm-lint check` + validation pass (5 methods: 2 view, 3 write)
 - On-chain verified on studionet: payable creation with hash match, funding/missing-URL/duplicate guards, expire-before-window revert
-- Full AI-consensus integration test (leader_only=False, all methods): settle_case tx `0x35f860ffcf3e892f2816c3a39ee04f97f541967e8dd90a7e83b8f4bae8860f64` settled via validators (score 100, verdict plagiarized, creator payout 1000/0); double settle reverted; expire after window released to accused
+- Full AI-consensus integration test (leader_only=False, all methods): settle_case tx `0x8374278c7ee86898e4a69da0cd7bfe9e5cda6811c99686373d5adb42b6774620` settled via validators (score 100, verdict plagiarized, creator payout 1000/0); double settle reverted; expire after window released to accused; receipt stderr is empty (no storage-read-in-nondet warning)
 
 ## Live Deployment
 Deployed on GenLayer studionet (chain `61999`):
-[`0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5`](https://explorer-studio.genlayer.com/address/0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5)
+[`0x9CbbDCA2e259a6F16BB893D71127B2Da8be93B26`](https://explorer-studio.genlayer.com/address/0x9CbbDCA2e259a6F16BB893D71127B2Da8be93B26)
 
 ## Source Code
 See `contracts/plagiarism_attribution_settler.py`

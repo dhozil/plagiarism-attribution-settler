@@ -9,7 +9,7 @@
 ![Status](https://img.shields.io/badge/status-live%20on%20studionet-2ea44f)
 ![Tests](https://img.shields.io/badge/tests-7%20passed-2ea44f)
 
-[Live Contract](https://explorer-studio.genlayer.com/address/0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5)
+[Live Contract](https://explorer-studio.genlayer.com/address/0x9CbbDCA2e259a6F16BB893D71127B2Da8be93B26)
 
 [GenLayer Docs](https://docs.genlayer.com)
 
@@ -27,8 +27,8 @@ Reference: [GenLayer Use Cases — Content and information assessment](https://d
 
 | | |
 |---|---|
-| **Contract** | [PlagiarismAttributionSettler](https://explorer-studio.genlayer.com/address/0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5) |
-| **Address** | `0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5` |
+| **Contract** | [PlagiarismAttributionSettler](https://explorer-studio.genlayer.com/address/0x9CbbDCA2e259a6F16BB893D71127B2Da8be93B26) |
+| **Address** | `0x9CbbDCA2e259a6F16BB893D71127B2Da8be93B26` |
 | **Network** | GenLayer studionet (chain `61999`) |
 | **Status** | Deployed + verified on-chain |
 
@@ -85,4 +85,4 @@ genvm-lint check contracts/plagiarism_attribution_settler.py
 ## Live Deployment
 
 Deployed on GenLayer studionet (chain `61999`):
-[`0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5`](https://explorer-studio.genlayer.com/address/0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5)
+[`0x9CbbDCA2e259a6F16BB893D71127B2Da8be93B26`](https://explorer-studio.genlayer.com/address/0x9CbbDCA2e259a6F16BB893D71127B2Da8be93B26)

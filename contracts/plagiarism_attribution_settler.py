@@ -125,16 +125,16 @@ def _fetch_content(url: str) -> str:
     return raw.decode("utf-8", errors="replace")[:4000]
 
 
-def _build_attribution_prompt(c: AttributionCase, original_content: str, disputed_content: str) -> str:
+def _build_attribution_prompt(c: dict, original_content: str, disputed_content: str) -> str:
     return f"""
 You are a plagiarism and attribution adjudicator. Compare the two contents
 fetched on-chain and decide whether the disputed content plagiarized the
 original content.
 
-TITLE: {c.title}
+TITLE: {c['title']}
 CLAIM (UNTRUSTED):
 --- BEGIN CLAIM ---
-{c.claim_text}
+{c['claim_text']}
 --- END CLAIM ---
 
 ORIGINAL CONTENT (authoritative, fetched on-chain):
@@ -258,15 +258,21 @@ class PlagiarismAttributionSettler(gl.Contract):
         if c.status != STATUS_OPEN:
             raise gl.vm.UserError("Case is not open")
 
+        # Snapshot storage into plain values BEFORE entering nondet mode.
+        # Reading a pickled storage dataclass inside nondet is not supported
+        # (UserWarning in storage.py) — the nondet functions below operate
+        # only on these plain snapshots.
         case_dict = _case_to_dict(c)
+        original_url = c.original_url
+        disputed_url = c.disputed_url
 
         def plagiarism_fn() -> dict:
             try:
-                original_content = _fetch_content(c.original_url)
-                disputed_content = _fetch_content(c.disputed_url)
+                original_content = _fetch_content(original_url)
+                disputed_content = _fetch_content(disputed_url)
             except Exception:
                 return {"score": 0, "reasoning": "Content URL unreachable; scored 0."}
-            prompt = _build_attribution_prompt(c, original_content, disputed_content)
+            prompt = _build_attribution_prompt(case_dict, original_content, disputed_content)
             raw_res = _exec_prompt_json(prompt)
             if not raw_res:
                 return {"score": 0, "reasoning": "Invalid response; scored 0."}
