@@ -7,9 +7,9 @@
 ![GenLayer](https://img.shields.io/badge/GenLayer-Intelligent%20Contract-6a4cff)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB)
 ![Status](https://img.shields.io/badge/status-live%20on%20studionet-2ea44f)
-![Tests](https://img.shields.io/badge/tests-6%20passed-2ea44f)
+![Tests](https://img.shields.io/badge/tests-7%20passed-2ea44f)
 
-[Live Contract](https://explorer-studio.genlayer.com/address/0xA99b3Cc956b78CA49dB4238dD876783AE9C2e1F1)
+[Live Contract](https://explorer-studio.genlayer.com/address/0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5)
 
 [GenLayer Docs](https://docs.genlayer.com)
 
@@ -27,8 +27,8 @@ Reference: [GenLayer Use Cases — Content and information assessment](https://d
 
 | | |
 |---|---|
-| **Contract** | [PlagiarismAttributionSettler](https://explorer-studio.genlayer.com/address/0xA99b3Cc956b78CA49dB4238dD876783AE9C2e1F1) |
-| **Address** | `0xA99b3Cc956b78CA49dB4238dD876783AE9C2e1F1` |
+| **Contract** | [PlagiarismAttributionSettler](https://explorer-studio.genlayer.com/address/0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5) |
+| **Address** | `0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5` |
 | **Network** | GenLayer studionet (chain `61999`) |
 | **Status** | Deployed + verified on-chain |
 
@@ -62,15 +62,18 @@ expire_case (after window → accused reclaims full fee)
 
 ## Security Model
 
+- **Caller binding (audit fix)**: only the accused (`accused == sender`) can fund a case; strangers cannot create cases in someone else's name (addresses validated as `0x` + 40 hex; creator ≠ accused)
 - Funding invariant: actual payable value must equal the recorded amount (`License funding must equal the case total`)
 - Content-hash binding prevents substituting different URLs after creation
 - LLM scoring with exact agreement (`SCORE_TOLERANCE = 5`); unreachable content → deterministic deny (score 0)
 - Binary settlement pays the full fee to exactly one party (atomic, no partial locks)
+- **Anti-lock**: after the response window, `expire_case` returns the full license fee to the accused — funds can never lock forever
+- `reasoning` is descriptive-only: it is stored as an audit note and never reused in any later consequential computation (there is no appeal path)
 
 ## Test
 
 ```bash
-gltest tests/ -q   # 6 passed
+gltest tests/ -q   # 7 passed
 ```
 
 ## Lint
@@ -82,4 +85,4 @@ genvm-lint check contracts/plagiarism_attribution_settler.py
 ## Live Deployment
 
 Deployed on GenLayer studionet (chain `61999`):
-[`0xA99b3Cc956b78CA49dB4238dD876783AE9C2e1F1`](https://explorer-studio.genlayer.com/address/0xA99b3Cc956b78CA49dB4238dD876783AE9C2e1F1)
+[`0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5`](https://explorer-studio.genlayer.com/address/0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5)

@@ -83,6 +83,15 @@ def _payout(recipient_hex: str, amount: u256) -> None:
     _PayableRecipient(Address(recipient_hex)).emit_transfer(value=u256(int(amount)))
 
 
+def _validate_address(addr: str) -> None:
+    s = addr.strip()
+    if len(s) != 42 or not s.startswith("0x"):
+        raise gl.vm.UserError("Invalid Ethereum address")
+    hex_part = s[2:]
+    if any(ch not in "0123456789abcdefABCDEF" for ch in hex_part):
+        raise gl.vm.UserError("Invalid Ethereum address")
+
+
 @gl.evm.contract_interface
 class _PayableRecipient:
     class View:
@@ -182,6 +191,12 @@ class PlagiarismAttributionSettler(gl.Contract):
             raise gl.vm.UserError("Case already exists")
         if not original_creator.strip() or not accused.strip():
             raise gl.vm.UserError("Creator and accused are required")
+        _validate_address(original_creator)
+        _validate_address(accused)
+        if gl.message.sender_address.as_hex.lower() != accused.strip().lower():
+            raise gl.vm.UserError("Only accused can create a case")
+        if original_creator.strip().lower() == accused.strip().lower():
+            raise gl.vm.UserError("Creator and accused must differ")
         if not title.strip() or not claim_text.strip():
             raise gl.vm.UserError("Title and claim text are required")
         if len(title.strip()) > MAX_TITLE_CHARS:
@@ -190,6 +205,8 @@ class PlagiarismAttributionSettler(gl.Contract):
             raise gl.vm.UserError("Claim text too long")
         if not original_url.strip() or not disputed_url.strip():
             raise gl.vm.UserError("Both content URLs are required")
+        if not original_url.strip().startswith("http") or not disputed_url.strip().startswith("http"):
+            raise gl.vm.UserError("Content URLs must be http(s) URLs")
         if len(original_url.strip()) > MAX_URL_CHARS:
             raise gl.vm.UserError("Original URL too long")
         if len(disputed_url.strip()) > MAX_URL_CHARS:

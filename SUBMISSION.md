@@ -29,13 +29,13 @@ The contract uses `gl.vm.run_nondet_unsafe()` with a custom validator for `settl
 Content-reuse disputes where an accused party posts a license fee so that a neutral, evidence-backed attribution verdict decides whether the original creator is compensated.
 
 ## Verification
-- 6/6 direct-mode unit tests (create validation + hash binding, plagiarized → creator full, not plagiarized → accused full, unreachable content → score 0, expiry after window, expiry/double-settle guards)
+- 7/7 direct-mode unit tests (create validation + hash binding, plagiarized → creator full, not plagiarized → accused full, unreachable content → score 0, expiry after window, expiry/double-settle guards, auth/address/duplicate guards)
 - `genvm-lint check` + validation pass (5 methods: 2 view, 3 write)
 - On-chain verified on studionet: payable creation with hash match, funding/missing-URL/duplicate guards, expire-before-window revert
 
 ## Live Deployment
 Deployed on GenLayer studionet (chain `61999`):
-[`0xA99b3Cc956b78CA49dB4238dD876783AE9C2e1F1`](https://explorer-studio.genlayer.com/address/0xA99b3Cc956b78CA49dB4238dD876783AE9C2e1F1)
+[`0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5`](https://explorer-studio.genlayer.com/address/0x67CC49E49A62Bc5369Abfc624c2C84d7285dB9F5)
 
 ## Source Code
 See `contracts/plagiarism_attribution_settler.py`
