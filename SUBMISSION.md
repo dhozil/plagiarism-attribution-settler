@@ -32,6 +32,7 @@ Content-reuse disputes where an accused party posts a license fee so that a neut
 - 7/7 direct-mode unit tests (create validation + hash binding, plagiarized → creator full, not plagiarized → accused full, unreachable content → score 0, expiry after window, expiry/double-settle guards, auth/address/duplicate guards)
 - `genvm-lint check` + validation pass (5 methods: 2 view, 3 write)
 - On-chain verified on studionet: payable creation with hash match, funding/missing-URL/duplicate guards, expire-before-window revert
+- Full AI-consensus integration test (leader_only=False, all methods): settle_case tx `0x35f860ffcf3e892f2816c3a39ee04f97f541967e8dd90a7e83b8f4bae8860f64` settled via validators (score 100, verdict plagiarized, creator payout 1000/0); double settle reverted; expire after window released to accused
 
 ## Live Deployment
 Deployed on GenLayer studionet (chain `61999`):
